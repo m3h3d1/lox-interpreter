@@ -25,10 +25,10 @@ public class Main {
             System.exit(1);
         }
 
-//        if (fileContents.length() > 0) {
-//            throw new RuntimeException("Scanner not implemented");
-//        } else {
-//            System.out.println("EOF  null"); // Placeholder, remove this line when implementing the scanner
-//        }
+        if (fileContents.length() > 0) {
+            throw new RuntimeException("Scanner not implemented");
+        } else {
+            System.out.println("EOF  null"); // Placeholder, remove this line when implementing the scanner
+        }
     }
 }
