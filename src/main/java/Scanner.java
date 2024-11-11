@@ -48,6 +48,8 @@ public class Scanner {
                     addToken(TokenType.SLASH);
                 }
             }
+            case ' ', '\t' -> { }
+            case '\n' -> line++;
             default -> Lox.error(line, "Unexpected character: " + ch);
         }
     }
