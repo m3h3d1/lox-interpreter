@@ -45,5 +45,12 @@ public class Main {
         tokens.put(")", TokenType.RIGHT_PAREN);
         tokens.put("{", TokenType.LEFT_BRACE);
         tokens.put("}", TokenType.RIGHT_BRACE);
+        tokens.put(",", TokenType.COMMA);
+        tokens.put(".", TokenType.DOT);
+        tokens.put("-", TokenType.MINUS);
+        tokens.put("+", TokenType.PLUS);
+        tokens.put(";", TokenType.SEMICOLON);
+        tokens.put("*", TokenType.STAR);
+        tokens.put("/", TokenType.SLASH);
     }
 }
