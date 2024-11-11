@@ -54,7 +54,10 @@ public class Scanner {
             default -> {
                 if(isDigit(ch)) {
                     number();
-                } else {
+                } else if(isAlpha(ch)) {
+                    identifier();
+                }
+                else {
                     Lox.error(line, "Unexpected character: " + ch);
                 }
             }
@@ -120,5 +123,18 @@ public class Scanner {
     private char peekNext() {
         if(current + 1 >= source.length()) return '\0';
         return source.charAt(current + 1);
+    }
+
+    private void identifier() {
+        while(isAlphaNumeric(peek())) advance();
+        addToken(TokenType.IDENTIFIER);
+    }
+
+    private boolean isAlphaNumeric(char ch) {
+        return isAlpha(ch) || isDigit(ch);
+    }
+
+    private boolean isAlpha(char ch) {
+        return ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || ch == '_');
     }
 }

@@ -10,7 +10,7 @@ enum TokenType {
     LESS, LESS_EQUAL,
 
     // Literals.
-    STRING, NUMBER,
+    IDENTIFIER, STRING, NUMBER,
 
     EOF
 }
