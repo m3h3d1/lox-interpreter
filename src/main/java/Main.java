@@ -1,8 +1,12 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
+    static Map<String, TokenType> tokens = new HashMap<>();
+
     public static void main(String[] args) {
         if (args.length < 2) {
             System.err.println("Usage: ./your_program.sh tokenize <filename>");
@@ -25,18 +29,21 @@ public class Main {
             System.exit(1);
         }
 
-        if (fileContents.length() > 0) {
+        if (!fileContents.isEmpty()) {
+            tokensInit();
             for(char ch : fileContents.toCharArray()) {
-                if(ch=='(') {
-                    System.out.println("LEFT_PAREN ( null");
-                }
-                else if(ch==')') {
-                    System.out.println("RIGHT_PAREN ) null");
-                }
+                System.out.println(tokens.get(ch+"") + " " + ch + " null");
             }
             System.out.println("EOF  null");
         } else {
             System.out.println("EOF  null");
         }
+    }
+
+    private static void tokensInit() {
+        tokens.put("(", TokenType.LEFT_PAREN);
+        tokens.put(")", TokenType.RIGHT_PAREN);
+        tokens.put("{", TokenType.LEFT_BRACE);
+        tokens.put("}", TokenType.RIGHT_BRACE);
     }
 }
