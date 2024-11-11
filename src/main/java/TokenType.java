@@ -9,5 +9,8 @@ enum TokenType {
     GREATER, GREATER_EQUAL,
     LESS, LESS_EQUAL,
 
+    // Literals.
+    STRING,
+
     EOF
 }
