@@ -17,7 +17,6 @@ public class Scanner {
             start = current;
             scanToken();
         }
-
         return tokens;
     }
 
@@ -38,6 +37,7 @@ public class Scanner {
             case '+' -> addToken(TokenType.PLUS);
             case ';' -> addToken(TokenType.SEMICOLON);
             case '*' -> addToken(TokenType.STAR);
+            case '=' -> addToken(match('=') ? TokenType.EQUAL_EQUAL : TokenType.EQUAL);
             default -> Lox.error(line, "Unexpected character: " + ch);
         }
     }
@@ -53,5 +53,12 @@ public class Scanner {
     private void addToken(TokenType type, Object literal) {
         String text = source.substring(start, current);
         tokens.add(new Token(type, text, literal, line));
+    }
+
+    private boolean match(char expected) {
+        if(isAtEnd()) return false;
+        if(source.charAt(current) != expected) return false;
+        current++;
+        return true;
     }
 }
