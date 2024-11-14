@@ -16,7 +16,7 @@ public class Lox {
         String command = args[0];
         String filename = args[1];
 
-        if (!Arrays.asList("tokenize", "parse").contains(command)) {
+        if (!Arrays.asList("tokenize", "parse", "evaluate").contains(command)) {
             System.err.println("Unknown command: " + command);
             System.exit(1);
         }
@@ -32,6 +32,7 @@ public class Lox {
         switch(command) {
             case "tokenize" -> tokenize(fileContents);
             case "parse" -> parse(fileContents);
+            case "evaluate" -> evaluate(fileContents);
         }
 
         if(hadError) System.exit(65);
@@ -52,8 +53,21 @@ public class Lox {
         Parser parser = new Parser(tokens);
         Expr expression = parser.parse();
 
-        if (hadError) return; // Stop if there is a syntax error.
+        if(hadError) return; // Stop if there is a syntax error.
         System.out.println(new AstPrinter().print(expression));
+    }
+
+    private static void evaluate(String source) {
+        Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();
+        Parser parser = new Parser(tokens);
+        Expr expression = parser.parse();
+        if(hadError) return;
+
+        Interpreter interpreter = new Interpreter();
+        var res = interpreter.evaluate(expression);
+        if(res == null) System.out.println("nil");
+        else System.out.println(res);
     }
 
     static void error(int line, String message) {
