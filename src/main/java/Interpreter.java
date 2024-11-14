@@ -11,10 +11,17 @@ public class Interpreter implements Expr.Visitor<Object> {
 
         switch(expr.operator.type) {
             case BANG: return !isTruthy(right);
-            case MINUS: return -(double)right;
+            case MINUS:
+                checkNumberOperand(expr.operator, right);
+                return -(double)right;
         }
 
         return null; // Unreachable
+    }
+
+    private void checkNumberOperand(Token operator, Object operand) {
+        if(operand instanceof Double) return;
+        throw new RuntimeError(operator, "Operand must be a number.");
     }
 
     private boolean isTruthy(Object object) {
@@ -80,7 +87,11 @@ public class Interpreter implements Expr.Visitor<Object> {
     }
 
     public void interpret(Expr expr) {
-        Object value = evaluate(expr);
-        System.out.println(stringify(value));
+        try {
+            Object value = evaluate(expr);
+            System.out.println(stringify(value));
+        } catch (RuntimeError error) {
+            Lox.runtimeError(error);
+        }
     }
 }
