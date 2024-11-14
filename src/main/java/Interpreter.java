@@ -24,6 +24,11 @@ public class Interpreter implements Expr.Visitor<Object> {
         throw new RuntimeError(operator, "Operand must be a number.");
     }
 
+    private void checkNumberOperands(Token operator, Object left, Object right) {
+        if(left instanceof Double && right instanceof Double) return;
+        throw new RuntimeError(operator, "Operands must be numbers.");
+    }
+
     private boolean isTruthy(Object object) {
         if(object == null) return false;
         if(object instanceof Boolean) return (boolean)object;
@@ -69,7 +74,9 @@ public class Interpreter implements Expr.Visitor<Object> {
             case GREATER_EQUAL: return (double)left >= (double)right;
             case LESS: return (double)left < (double)right;
             case LESS_EQUAL: return (double)left <= (double)right;
-            case MINUS: return (double)left - (double)right;
+            case MINUS:
+                checkNumberOperands(expr.operator, left, right);
+                return (double)left - (double)right;
             case PLUS:
                 if(left instanceof Double && right instanceof Double) {
                     return (double)left + (double)right;
@@ -77,9 +84,14 @@ public class Interpreter implements Expr.Visitor<Object> {
                 if(left instanceof String && right instanceof String) {
                     return (String)left + (String)right;
                 }
+                checkNumberOperands(expr.operator, left, right);
                 break;
-            case SLASH: return (double)left / (double)right;
-            case STAR: return (double)left * (double)right;
+            case SLASH:
+                checkNumberOperands(expr.operator, left, right);
+                return (double)left / (double)right;
+            case STAR:
+                checkNumberOperands(expr.operator, left, right);
+                return (double)left * (double)right;
         }
 
         // Unreachable
