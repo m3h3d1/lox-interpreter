@@ -1,1 +1,3 @@
-print "Hello, World!";
+print "quz" + "foo" + "world";
+print 31 - 95;
+print "world" == "baz";

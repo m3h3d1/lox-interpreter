@@ -72,7 +72,7 @@ public class Scanner {
                     addToken(TokenType.SLASH);
                 }
             }
-            case ' ', '\t' -> { }
+            case ' ', '\r', '\t' -> { }
             case '\n' -> line++;
             case '"' -> string();
             default -> {
