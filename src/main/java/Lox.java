@@ -65,9 +65,7 @@ public class Lox {
         if(hadError) return;
 
         Interpreter interpreter = new Interpreter();
-        var res = interpreter.evaluate(expression);
-        if(res == null) System.out.println("nil");
-        else System.out.println(res);
+        interpreter.interpret(expression);
     }
 
     static void error(int line, String message) {
