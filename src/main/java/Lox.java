@@ -17,7 +17,7 @@ public class Lox {
         String command = args[0];
         String filename = args[1];
 
-        if (!Arrays.asList("tokenize", "parse", "evaluate").contains(command)) {
+        if (!Arrays.asList("tokenize", "parse", "evaluate", "run").contains(command)) {
             System.err.println("Unknown command: " + command);
             System.exit(1);
         }
@@ -34,6 +34,7 @@ public class Lox {
             case "tokenize" -> tokenize(fileContents);
             case "parse" -> parse(fileContents);
             case "evaluate" -> evaluate(fileContents);
+            case "run" -> run(fileContents);
         }
 
         if(hadError) System.exit(65);
@@ -53,7 +54,7 @@ public class Lox {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        Expr expression = parser.parseExpression();
 
         if(hadError) return; // Stop if there is a syntax error.
         System.out.println(new AstPrinter().print(expression));
@@ -63,11 +64,22 @@ public class Lox {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
         Parser parser = new Parser(tokens);
-        Expr expression = parser.parse();
+        Expr expression = parser.parseExpression();
         if(hadError) return;
 
         Interpreter interpreter = new Interpreter();
-        interpreter.interpret(expression);
+        interpreter.interpretExpression(expression);
+    }
+
+    private static void run(String source) {
+        Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();
+        Parser parser = new Parser(tokens);
+        List<Stmt> statements = parser.parseStatements();
+        if(hadError) return;
+
+        Interpreter interpreter = new Interpreter();
+        interpreter.interpretStatements(statements);
     }
 
     static void error(int line, String message) {
