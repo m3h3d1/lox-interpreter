@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 
 public class Lox {
@@ -15,7 +16,7 @@ public class Lox {
         String command = args[0];
         String filename = args[1];
 
-        if (!command.equals("tokenize")) {
+        if (!Arrays.asList("tokenize", "parse").contains(command)) {
             System.err.println("Unknown command: " + command);
             System.exit(1);
         }
@@ -28,18 +29,31 @@ public class Lox {
             System.exit(1);
         }
 
-        run(fileContents);
+        switch(command) {
+            case "tokenize" -> tokenize(fileContents);
+            case "parse" -> parse(fileContents);
+        }
+
         if(hadError) System.exit(65);
     }
 
-    private static void run(String source) {
+    private static void tokenize(String source) {
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.scanTokens();
 
         for (Token token : tokens) {
             System.out.println(token);
         }
-        System.out.println("EOF  null");
+    }
+
+    private static void parse(String source) {
+        Scanner scanner = new Scanner(source);
+        List<Token> tokens = scanner.scanTokens();
+        Parser parser = new Parser(tokens);
+        Expr expression = parser.parse();
+
+        if (hadError) return; // Stop if there is a syntax error.
+        System.out.println(new AstPrinter().print(expression));
     }
 
     static void error(int line, String message) {
@@ -49,5 +63,13 @@ public class Lox {
     private static void report(int line, String where, String message) {
         System.err.println("[line " + line + "] Error" + where + ": " + message);
         hadError = true;
+    }
+
+    static void error(Token token, String message) {
+        if (token.type == TokenType.EOF) {
+            report(token.line, " at end", message);
+        } else {
+            report(token.line, " at '" + token.lexeme + "'", message);
+        }
     }
 }
