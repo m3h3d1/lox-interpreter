@@ -50,6 +50,10 @@ public class Interpreter implements Expr.Visitor<Object> {
         Object right = evaluate(expr.right);
 
         switch(expr.operator.type) {
+            case GREATER: return (double)left > (double)right;
+            case GREATER_EQUAL: return (double)left >= (double)right;
+            case LESS: return (double)left < (double)right;
+            case LESS_EQUAL: return (double)left <= (double)right;
             case MINUS: return (double)left - (double)right;
             case PLUS:
                 if(left instanceof Double && right instanceof Double) {
