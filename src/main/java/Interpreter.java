@@ -23,6 +23,12 @@ public class Interpreter implements Expr.Visitor<Object> {
         return true;
     }
 
+    private boolean isEqual(Object a, Object b) {
+        if(a == null && b == null) return true;
+        if(a == null) return false;
+        return a.equals(b);
+    }
+
     private String stringify(Object object) {
         if(object == null) return "nil";
         if(object instanceof Double) {
@@ -50,6 +56,8 @@ public class Interpreter implements Expr.Visitor<Object> {
         Object right = evaluate(expr.right);
 
         switch(expr.operator.type) {
+            case BANG_EQUAL: return !isEqual(left, right);
+            case EQUAL_EQUAL: return isEqual(left, right);
             case GREATER: return (double)left > (double)right;
             case GREATER_EQUAL: return (double)left >= (double)right;
             case LESS: return (double)left < (double)right;
