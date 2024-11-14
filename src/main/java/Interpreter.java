@@ -70,10 +70,18 @@ public class Interpreter implements Expr.Visitor<Object> {
         switch(expr.operator.type) {
             case BANG_EQUAL: return !isEqual(left, right);
             case EQUAL_EQUAL: return isEqual(left, right);
-            case GREATER: return (double)left > (double)right;
-            case GREATER_EQUAL: return (double)left >= (double)right;
-            case LESS: return (double)left < (double)right;
-            case LESS_EQUAL: return (double)left <= (double)right;
+            case GREATER:
+                checkNumberOperands(expr.operator, left, right);
+                return (double)left > (double)right;
+            case GREATER_EQUAL:
+                checkNumberOperands(expr.operator, left, right);
+                return (double)left >= (double)right;
+            case LESS:
+                checkNumberOperands(expr.operator, left, right);
+                return (double)left < (double)right;
+            case LESS_EQUAL:
+                checkNumberOperands(expr.operator, left, right);
+                return (double)left <= (double)right;
             case MINUS:
                 checkNumberOperands(expr.operator, left, right);
                 return (double)left - (double)right;
