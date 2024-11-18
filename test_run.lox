@@ -1,2 +1,4 @@
-print 22;
-print x;
+var a;
+var b = 2;
+var a = b = 1;
+print a;

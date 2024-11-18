@@ -9,6 +9,10 @@ public class Environment {
         throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
     }
 
+    public void assign(Token name, Object value) { // !
+        values.put(name.lexeme, value);
+    }
+
     public void define(String name, Object value) {
         values.put(name, value);
     }
