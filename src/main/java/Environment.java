@@ -6,7 +6,7 @@ public class Environment {
 
     public Object get(Token name) {
         if (values.containsKey(name.lexeme)) return values.get(name.lexeme);
-        return null;
+        throw new RuntimeError(name, "Undefined variable '" + name.lexeme + "'.");
     }
 
     public void define(String name, Object value) {
