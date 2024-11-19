@@ -1,8 +1,19 @@
+var bar = "global bar";
+var world = "global world";
+var hello = "global hello";
 {
-    var world = "before";
+  var bar = "outer bar";
+  var world = "outer world";
+  {
+    var bar = "inner bar";
+    print bar;
     print world;
+    print hello;
+  }
+  print bar;
+  print world;
+  print hello;
 }
-{
-    var world = "after";
-    print world;
-}
+print bar;
+print world;
+print hello;
