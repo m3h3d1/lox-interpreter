@@ -1,4 +1,8 @@
-var a;
-var b = 2;
-var a = b = 1;
-print a;
+{
+    var world = "before";
+    print world;
+}
+{
+    var world = "after";
+    print world;
+}
