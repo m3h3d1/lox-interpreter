@@ -1,5 +1,2 @@
-if (false or "ok") print "baz";
-if (nil or "ok") print "baz";
-
-if (true and true) print "world1";
-if (true or "world") print "world2";
+var foo = 0;
+while (foo < 3) print foo = foo + 1;
