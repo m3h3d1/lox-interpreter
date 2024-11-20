@@ -1,3 +1,5 @@
-if (true) {
-  if (false) print "quz"; else print "tuz";
-}
+if (false or "ok") print "baz";
+if (nil or "ok") print "baz";
+
+if (true and true) print "world1";
+if (true or "world") print "world2";
