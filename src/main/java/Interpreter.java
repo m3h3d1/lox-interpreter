@@ -8,6 +8,11 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
     Interpreter() {
         globals.define("clock", new LoxCallable() {
             @Override
+            public int arity() {
+                return 0;
+            }
+
+            @Override
             public Object call(Interpreter interpreter, List<Object> arguments) {
                 return (double)System.currentTimeMillis() / 1000.0;
             }
@@ -235,8 +240,7 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
                 return (double)left * (double)right;
         }
 
-        // Unreachable
-        return null;
+        return null; // Unreachable
     }
 
     @Override
@@ -247,7 +251,15 @@ public class Interpreter implements Expr.Visitor<Object>, Stmt.Visitor<Void> {
             arguments.add(evaluate(argument));
         }
 
+        if(!(callee instanceof LoxCallable)) {
+            throw new RuntimeError(expr.paren, "Can only call functions and classes.");
+        }
+
         LoxCallable function = (LoxCallable)callee;
+        if(arguments.size() != function.arity()) {
+            throw new RuntimeError(expr.paren, "Expected " + function.arity() + " arguments but got " + arguments.size() + ".");
+        }
+
         return function.call(this, arguments);
     }
 }

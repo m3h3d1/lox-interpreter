@@ -10,6 +10,11 @@ public class LoxFunction implements LoxCallable {
     }
 
     @Override
+    public int arity() {
+        return declaration.params.size();
+    }
+
+    @Override
     public Object call(Interpreter interpreter, List<Object> arguments) {
         Environment environment = new Environment(closure);
         for(int i=0; i<declaration.params.size(); i++) {

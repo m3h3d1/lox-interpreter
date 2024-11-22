@@ -1,12 +1,12 @@
-fun makeGreeter(greeting) {
-  fun greet(name) {
-    print greeting + " " + name;
-  }
-  return greet;
+fun f(a, b) {
+  print a;
+  print b;
 }
 
-var sayHello = makeGreeter("Hello");
-sayHello("Bob");
+// f(1, 2, 3, 4);
 
-// Expected output:
-// Hello Bob
+85();
+
+// Expected:
+// Can only call functions and classes.
+// Expected 2 arguments but got 4.
