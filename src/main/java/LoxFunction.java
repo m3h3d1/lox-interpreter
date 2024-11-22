@@ -12,8 +12,13 @@ public class LoxFunction implements LoxCallable {
         for(int i=0; i<declaration.params.size(); i++) {
             environment.define(declaration.params.get(i).lexeme, arguments.get(i));
         }
-        interpreter.executeBlock(declaration.body, environment);
-        return this.toString();
+
+        try {
+            interpreter.executeBlock(declaration.body, environment);
+        } catch(Return returnValue) {
+            return returnValue.value;
+        }
+        return null; // Return null when no return statement is encountered
     }
 
     @Override
