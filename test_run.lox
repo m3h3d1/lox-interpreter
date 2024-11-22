@@ -1,1 +1,12 @@
-print clock();
+fun foo() {
+  print 7;
+}
+foo();
+
+fun f1(a) {
+  print a;
+}
+f1(76);
+
+fun foo1() {}
+print foo1();
