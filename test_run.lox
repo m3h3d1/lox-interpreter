@@ -1,12 +1,20 @@
-fun f(a, b) {
-  print a;
-  print b;
+// The first counter is a global variable that is modified by the inner block.
+// The second counter is a local variable that shadows the global variable.
+var counter = 62;
+
+fun incrementCounter(amount) {
+  counter = counter + amount;
+  print counter;
 }
 
-// f(1, 2, 3, 4);
-
-85();
+{
+  counter = 75;
+  incrementCounter(5);
+  print counter;
+}
+print counter;
 
 // Expected:
-// Can only call functions and classes.
-// Expected 2 arguments but got 4.
+// 80
+// 80
+// 80

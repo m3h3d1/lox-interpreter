@@ -20,7 +20,10 @@ public class Environment {
     }
 
     public void assign(Token name, Object value) { // !
-        values.put(name.lexeme, value);
+        if(values.containsKey(name.lexeme)) {
+            values.put(name.lexeme, value);
+            return;
+        }
         if(enclosing != null) enclosing.assign(name, value);
     }
 
