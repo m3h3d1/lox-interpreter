@@ -9,6 +9,7 @@ An interpreter for Lox programming language, based on the book Crafting Interpre
 - **Statements**: Print, expression, and variable declarations.
 - **Variables**: Global and local variable scopes.
 - **Control Flow**: `if`, `else`, `while`, and `for` loops.
+- **Functions**: Define and call reusable functions with local scope.
 - **Error Reporting**: Syntax and runtime error detection with helpful messages.
 
 ## Sample Code in Lox
@@ -36,4 +37,16 @@ while (count > 0) {
 for (var i = 0; i < 5; i = i + 1) {
   print i;
 }
+
+// Function definition and call
+fun greet(name) {
+  print "Hello, " + name + "!";
+}
+greet("Lox"); // Output: Hello, Lox!
+
+// Function with return value
+fun add(a, b) {
+  return a + b;
+}
+print add(5, 7); // Output: 12
 ```
