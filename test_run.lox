@@ -1,18 +1,12 @@
-fun f1() { return 10; }
-print f1();
-
-fun foo() {}
-print foo;
-
-fun f() {
-    while (!true) return "ok";
+fun makeGreeter(greeting) {
+  fun greet(name) {
+    print greeting + " " + name;
+  }
+  return greet;
 }
-print f();
 
-fun f2(a) { print a; }
-f2(10);
+var sayHello = makeGreeter("Hello");
+sayHello("Bob");
 
 // Expected output:
-// 10
-// <fn foo>
-// nil
+// Hello Bob
